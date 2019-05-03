@@ -46,6 +46,7 @@ module.exports = function prettyFactory (options) {
 
   const colorizer = colors(opts.colorize)
   const search = opts.search
+  const min_level = parseInt(opts.level)
 
   return pretty
 
@@ -68,6 +69,10 @@ module.exports = function prettyFactory (options) {
     }
 
     if (search && !jmespath.search(log, search)) {
+      return
+    }
+    
+    if (min_level && log.level && parseInt(log.level) < min_level) {
       return
     }
 
